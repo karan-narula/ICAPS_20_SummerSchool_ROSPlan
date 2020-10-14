@@ -35,8 +35,9 @@
  :duration (= ?duration (manipulate_box_cost))
  :condition (and
     (at start (box_at_wp ?box ?wp))
-    (at start (robot_at_wp ?robot ?wp))
-    (at start (box_on_robot ?box ?robot));;
+    (over all (robot_at_wp ?robot ?wp))
+    (over all (robot_does_not_have_box ?robot))
+    ;(at start (box_on_robot ?box ?robot))
     )
  :effect (and
     (at end (not (box_at_wp ?box ?wp)))
@@ -49,11 +50,12 @@
  :parameters (?robot - robot ?box - box ?wp - wp)
  :duration (= ?duration (manipulate_box_cost))
  :condition (and
-    (at start (box_on_robot ?box ?robot))
+    (over all (box_on_robot ?box ?robot))
     (at start (robot_at_wp ?robot ?wp))
+    ;(over all (not (robot_does_not_have_box ?robot)))
     )
  :effect (and
-    (at start (not (box_on_robot ?box ?robot)))
+    (at end (not (box_on_robot ?box ?robot)))
     (at end (box_at_wp ?box ?wp))
     (at end (robot_does_not_have_box ?robot))
     )
